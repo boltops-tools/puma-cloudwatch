@@ -1,7 +1,6 @@
 class PumaCloudwatch::Metrics
   class Parser
     METRICS = [:backlog, :running, :pool_capacity, :max_threads]
-    # CLUSTERED_METRICS = [:booted_workers, :old_workers]
 
     def initialize(workers:, data:)
       @clustered = (workers || 0) > 0
@@ -27,20 +26,12 @@ class PumaCloudwatch::Metrics
       statuses = worker_statuses.map { |s| s["last_status"] } # last_status: Array with worker stats
       statuses.each do |status|
         METRICS.each do |metric|
-          item[metric] += [status[metric.to_s]]
+          count = status[metric.to_s]
+          item[metric] += [count] if count
         end
       end
-      result << item
+      result << item unless item.empty?
       result
     end
-
-    # def parse(stats, labels = {}, result)
-    #   pp stats
-    #   stats.each do |key, value|
-    #     value.each { |s| parse(s, labels.merge(index: s['index']), result) } if key == 'worker_status'
-    #     parse(value, labels, result) if key == 'last_status'
-    #     result << {name: key, value: value, labels: labels} if metric?(key)
-    #   end
-    # end
   end
 end

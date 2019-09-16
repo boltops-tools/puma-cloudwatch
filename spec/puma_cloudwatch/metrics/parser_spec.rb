@@ -31,9 +31,7 @@ RSpec.describe PumaCloudwatch::Metrics::Parser do
 
       it "call" do
         results = parser.call
-        # puts "results:"
-        # pp results
-        expect(results).to be_a(Array)
+        expect(results).to be_empty
       end
     end
 
@@ -52,7 +50,7 @@ RSpec.describe PumaCloudwatch::Metrics::Parser do
               "booted"=>true,
               "last_checkin"=>"2019-09-16T16:12:41Z",
               "last_status"=>
-               {"backlog"=>0, "running"=>0, "pool_capacity"=>16, "max_threads"=>16}},
+               {"backlog"=>0, "running"=>1, "pool_capacity"=>16, "max_threads"=>16}},
              {"started_at"=>"2019-09-16T16:12:11Z",
               "pid"=>19836,
               "index"=>1,
@@ -61,17 +59,21 @@ RSpec.describe PumaCloudwatch::Metrics::Parser do
               "last_checkin"=>"2019-09-16T16:12:41Z",
               "last_status"=>
                {"backlog"=>0,
-                "running"=>0,
-                "pool_capacity"=>16,
+                "running"=>16,
+                "pool_capacity"=>8,
                 "max_threads"=>16}}]}
 
       }
 
       it "call" do
         results = parser.call
-        puts "results:"
-        pp results
         expect(results).to be_a(Array)
+        expect(results).to eq(
+          [{:backlog=>[0, 0],
+            :running=>[1, 16],
+            :pool_capacity=>[16, 8],
+            :max_threads=>[16, 16]}]
+        )
       end
     end
   end
