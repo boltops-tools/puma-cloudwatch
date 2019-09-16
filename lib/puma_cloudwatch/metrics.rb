@@ -11,10 +11,6 @@ module PumaCloudwatch
 
     def initialize(launcher)
       @launcher = launcher
-      # puts "PumaCloudwatch::Metrics launcher.options #{launcher.options}"
-      # puts "launcher.options[:workers] #{launcher.options[:workers].inspect}"
-      # puts "launcher.options[:control_url] #{launcher.options[:control_url].inspect}"
-      # puts "launcher.options[:control_auth_token] #{launcher.options[:control_auth_token].inspect}"
     end
 
     def start_sending

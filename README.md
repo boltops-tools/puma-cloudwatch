@@ -12,18 +12,27 @@ PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
 PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
 PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
 PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
-PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the params that would be sent to CloudWatch instead of actually sending them. | (unset)
+PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the metrics instead of sending them to cloudwatch. | (unset)
 
 ### Dimension Value: App Name
 
 You should configure the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name.
-For example if you're application is named "myapp", this would be a good value to use:
+For example, if you're application is named "myapp", this would be a good value to use:
 
     PUMA_CLOUDWATCH_DIMENSION_VALUE=myapp-puma
 
 Then you can get the metrics for the `pool_capacity` for your `myapp-puma` app.
 
-The most useful CloudWatch statistic is Sum. It tells you all available `pool_capacity` for the `myapp-puma` app.
+### Sum and Frequency
+
+If you leave the `PUMA_CLOUDWATCH_FREQUENCY` at its default of 60 seconds and you graph out the `pool_capacity` capacity at a 1-minute period, then a useful CloudWatch statistic is Sum. It'll show available `pool_capacity` for all `myapp-puma` servers.  The Sum of the `pool_threads` shows all available threads.
+
+pool capacity: the number of requests that the server is capable of taking right now.
+max_threads:  preconfigured maximum number of worker threads
+
+IMPORTANT: If you change the CloudWatch send frequency, then Sum statistic must be normalized to be useful.  For example, let's say you use `PUMA_CLOUDWATCH_FREQUENCY=30`. Then puma-cloudwatch will send data every 30s. However, if the chart is still using a 1-minute period, then the Sum statistic would "double".  Capacity has not doubled, puma-cloudwatch is just sending twice as much data.  To normalize the Sum in this case, you can set the time period to match the frequency: 30 seconds.
+
+If you use the Average statistic, then you don't have to worry about normalizing. Average already inherently normalized. In a way, average simpler.
 
 ## Installation
 
@@ -46,7 +55,7 @@ activate_control_app
 plugin :cloudwatch
 ```
 
-It activates the puma control application, and runs the puma-cloudwatch plugin to send metrics.
+It activates the puma control rack application, and enables the puma-cloudwatch plugin to send metrics.
 
 ## Contributing
 

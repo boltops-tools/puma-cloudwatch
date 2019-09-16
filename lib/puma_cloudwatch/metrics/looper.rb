@@ -22,13 +22,9 @@ class PumaCloudwatch::Metrics
     def perform
       puts "puma-cloudwatch plugin: Will send data every #{@frequency} seconds."
       loop do
-        # TODO: check this to check socket available
-        sleep 1 # at the beginning because it takes a little time for puma to start up.
-
         stats = Fetcher.new(@options).call
         results = Parser.new(stats).call
         Sender.new(results).call
-
         sleep @frequency
       end
     end
