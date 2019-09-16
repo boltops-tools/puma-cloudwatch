@@ -1,6 +1,9 @@
 require "bundler/setup"
 require "puma_cloudwatch"
 
+# Ensures aws api never called. Fixture home folder does not contain ~/.aws/credentails
+ENV['HOME'] = File.join(Dir.pwd,'spec/fixtures/home')
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"

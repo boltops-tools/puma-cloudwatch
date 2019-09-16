@@ -3,11 +3,12 @@ RSpec.describe PumaCloudwatch::Metrics::Fetcher do
 
   describe "fetcher" do
     it "call" do
-      json_data = JSON.dump({fake: "data"})
+      fake_data = {"fake" => "data"}
+      json_data = JSON.dump(fake_data)
       allow(Socket).to receive(:unix).and_return(json_data)
 
       stats = fetcher.call
-      expect(stats).to be_a(Hash)
+      expect(stats).to eq(fake_data)
     end
   end
 end

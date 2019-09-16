@@ -1,8 +1,25 @@
-# PumaCloudwatch
+# Puma Cloudwatch
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/puma_cloudwatch`. To experiment with that code, run `bin/console` for an interactive prompt.
+A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
-TODO: Delete this and the text above, and describe your gem
+## Usage
+
+The CloudWatch metric has these defaults:
+
+Description | Default Value | Configurable Env Var
+--- | --- | ---
+namespace | WebServer | PUMA\_CLOUDWATCH\_NAMESPACE
+dimension name | App | PUMA\_CLOUDWATCH\_DIMENSION\_NAME
+dimension value | puma | PUMA\_CLOUDWATCH\_DIMENSION\_VALUE
+
+You should configure the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name.
+For example if you're application is named "myapp", this would be a good value to use:
+
+    PUMA_CLOUDWATCH_DIMENSION_VALUE=myapp-puma
+
+Then you can get the metrics for the `pool_capacity` for your `myapp-puma` app.
+
+The most useful CloudWatch statistic is Sum. It tells you all available `pool_capacity` for the `myapp-puma` app.
 
 ## Installation
 
@@ -16,13 +33,16 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+In your `config/puma.rb`
 
-    $ gem install puma_cloudwatch
+Add these 2 lines your `config/puma.rb`:
 
-## Usage
+```ruby
+activate_control_app
+plugin :cloudwatch
+```
 
-TODO: Write usage instructions here
+It activates the puma control application, and runs the puma-cloudwatch plugin to send metrics.
 
 ## Development
 
