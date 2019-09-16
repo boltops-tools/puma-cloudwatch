@@ -28,7 +28,7 @@ Then you can get metrics for your `myapp-puma` app. List of metrics:
 * running: the number of running threads (spawned threads) for any Puma worker.
 * backlog: the number of connections in that worker's "todo" set waiting for a worker thread.
 
-Interestly, when testing, `pool_capacity` is a very important metric. It can be use to show how busy the server is getting before it reaches capacity.
+The `pool_capacity` metric is important. It can be use to show how busy the server is getting before it reaches capacity.
 
 ### Sum and Frequency
 
