@@ -1,9 +1,28 @@
 RSpec.describe PumaCloudwatch::Metrics::Parser do
-  subject(:parser) { described_class.new(workers: workers, data: data) }
+  subject(:parser) { described_class.new(data) }
 
-  context "clustered" do
-    let(:workers) { 2 }
+  context "single mode" do
+    let(:data) do
+      {"started_at"=>"2019-09-16T19:20:12Z",
+       "backlog"=>0,
+       "running"=>16,
+       "pool_capacity"=>8,
+       "max_threads"=>16}
+    end
 
+    it "call" do
+      results = parser.call
+      expect(results).to be_a(Array)
+      expect(results).to eq(
+        [{:backlog=>[0],
+          :running=>[16],
+          :pool_capacity=>[8],
+          :max_threads=>[16]}]
+      )
+    end
+  end
+
+  context "cluster mode" do
     # initial data does not yet have last_status filled out
     context "last_status initially empty" do
       let(:data) {

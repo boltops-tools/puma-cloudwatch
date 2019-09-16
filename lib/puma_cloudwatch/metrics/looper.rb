@@ -27,7 +27,7 @@ class PumaCloudwatch::Metrics
         stats = Fetcher.new(@options).call
         # puts "stats:".color(:yellow)
         # pp stats
-        results = Parser.new(workers: @options[:workers], data: stats).call
+        results = Parser.new(stats).call
         puts "results:" #.color(:yellow)
         pp results
         # Sender.new(results).deliver
