@@ -84,7 +84,7 @@ class PumaCloudwatch::Metrics
     end
 
     def noop?
-      !ENV["PUMA_CLOUDWATCH_NOOP"].nil? # TODO: remove hardcode
+      !ENV["PUMA_CLOUDWATCH_NOOP"].nil?
     end
 
     def cloudwatch
