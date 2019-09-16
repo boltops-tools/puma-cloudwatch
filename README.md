@@ -4,13 +4,17 @@ A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
 ## Usage
 
-The CloudWatch metric has these defaults:
+Some of the plugin's settings can be controlled with environmental variables.
 
-Description | Default Value | Configurable Env Var
+Env Var | Description | Default Value
 --- | --- | ---
-namespace | WebServer | PUMA\_CLOUDWATCH\_NAMESPACE
-dimension name | App | PUMA\_CLOUDWATCH\_DIMENSION\_NAME
-dimension value | puma | PUMA\_CLOUDWATCH\_DIMENSION\_VALUE
+PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
+PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
+PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
+PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
+PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the params that would be sent to CloudWatch instead of actually sending them. | (unset)
+
+### Dimension Value: App Name
 
 You should configure the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name.
 For example if you're application is named "myapp", this would be a good value to use:
@@ -26,7 +30,7 @@ The most useful CloudWatch statistic is Sum. It tells you all available `pool_ca
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'puma_cloudwatch'
+gem 'puma-cloudwatch'
 ```
 
 And then execute:

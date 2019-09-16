@@ -8,7 +8,7 @@ class PumaCloudwatch::Metrics
       @options = options
       @control_url = options[:control_url]
       @control_auth_token = options[:control_auth_token]
-      @frequency = ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 5 # 30
+      @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
     end
 
     def run
@@ -25,12 +25,8 @@ class PumaCloudwatch::Metrics
         sleep 1 # at the beginning because it takes a little time for puma to start up.
 
         stats = Fetcher.new(@options).call
-        # puts "stats:".color(:yellow)
-        # pp stats
         results = Parser.new(stats).call
-        puts "results:" #.color(:yellow)
-        pp results
-        # Sender.new(results).deliver
+        Sender.new(results).call
 
         sleep @frequency
       end

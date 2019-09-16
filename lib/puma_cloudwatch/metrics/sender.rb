@@ -19,7 +19,7 @@ class PumaCloudwatch::Metrics
     end
 
     def call
-      cloudwatch.put_metric_data(
+      put_metric_data(
         namespace: @namespace,
         metric_data: metric_data,
       )
@@ -74,6 +74,19 @@ class PumaCloudwatch::Metrics
     end
 
   private
+    def put_metric_data(params)
+      if noop?
+        puts "NOOP: sending data to cloudwatch:"
+        pp params
+      else
+        cloudwatch.put_metric_data(params)
+      end
+    end
+
+    def noop?
+      true
+    end
+
     def cloudwatch
       @cloudwatch ||= Aws::CloudWatch::Client.new
     end
