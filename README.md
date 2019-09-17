@@ -61,6 +61,14 @@ plugin :cloudwatch
 
 It activates the puma control rack application, and enables the puma-cloudwatch plugin to send metrics.
 
+### More Setup Notes
+
+Make sure that EC2 instance running the puma server has IAM permission to publish to CloudWatch. If you are using ECS, the default permissions for the ECS task should work.
+
+If are you using ECS awsvpc, make sure you have the task running on private subnets with a NAT. From the AWS docs: [Task Networking with the awsvpc Network Mode](https://docs.aws.amazon.com/en_pv/AmazonECS/latest/developerguide/task-networking.html)
+
+> The awsvpc network mode does not provide task ENIs with public IP addresses for tasks that use the EC2 launch type. To access the internet, tasks that use the EC2 launch type must be launched in a private subnet that is configured to use a NAT gateway.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/puma_cloudwatch.
