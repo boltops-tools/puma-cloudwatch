@@ -75,10 +75,14 @@ class PumaCloudwatch::Metrics
 
   private
     def put_metric_data(params)
-      if noop?
-        puts "NOOP: sending data to cloudwatch:"
+      if noop? or ENV['PUMA_CLOUDWATCH_DEBUG']
+        message = "sending data to cloudwatch:"
+        message = "NOOP: #{message}" if noop?
+        puts message
         pp params
-      else
+      end
+
+      unless noop?
         cloudwatch.put_metric_data(params)
       end
     end
