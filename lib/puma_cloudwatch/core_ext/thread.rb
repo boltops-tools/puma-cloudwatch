@@ -11,7 +11,7 @@ class << Thread
       rescue Exception => e
         raise if Thread.abort_on_exception || Thread.current.abort_on_exception
         puts "Thread for block #{block.inspect} terminated with exception: #{e.message}"
-        puts e.backtrace.map {|line| "  #{line}"}
+        puts e.backtrace.reverse.map {|line| "  #{line}"}
       end
     end
   end
