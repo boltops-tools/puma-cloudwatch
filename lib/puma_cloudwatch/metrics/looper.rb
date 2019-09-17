@@ -13,14 +13,13 @@ class PumaCloudwatch::Metrics
 
     def run
       raise StandardError, "Puma control app is not activated" if @control_url == nil
-      puts "Sending metrics to CloudWatch..."
+      puts "puma-cloudwatch plugin: Will send data every #{@frequency} seconds3."
       Thread.new do
         perform
       end
     end
 
     def perform
-      puts "puma-cloudwatch plugin: Will send data every #{@frequency} seconds."
       loop do
         stats = Fetcher.new(@options).call
         results = Parser.new(stats).call
