@@ -36,7 +36,7 @@ If you leave the `PUMA_CLOUDWATCH_FREQUENCY` at its default of 60 seconds and yo
 
 **Important**: If you change the CloudWatch send frequency, then Sum statistic must be normalized to be useful.  For example, let's say you use `PUMA_CLOUDWATCH_FREQUENCY=30`. Then puma-cloudwatch will send data every 30s. However, if the chart is still using a 1-minute period, then the Sum statistic would "double".  Capacity has not doubled, puma-cloudwatch is just sending twice as much data.  To normalize the Sum in this case, you can set the time period to match the frequency: 30 seconds.
 
-If you use the Average statistic, then you don't have to worry about normalizing. Average already inherently normalized. In a way, average simpler.
+If you use the Average statistic, then you don't have to worry about normalizing. Average already inherently normalized. In this sense, average is simpler.
 
 ## Installation
 
