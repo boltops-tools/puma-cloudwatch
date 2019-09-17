@@ -1,4 +1,4 @@
-# Puma Cloudwatch Puma
+# Puma Cloudwatch Plugin
 
 A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
