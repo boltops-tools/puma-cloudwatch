@@ -13,7 +13,7 @@ class PumaCloudwatch::Metrics
 
     def run
       raise StandardError, "Puma control app is not activated" if @control_url == nil
-      puts "puma-cloudwatch plugin: Will send data every #{@frequency} seconds3."
+      puts "puma-cloudwatch plugin: Will send data every #{@frequency} seconds."
       Thread.new do
         perform
       end
