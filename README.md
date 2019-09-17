@@ -1,20 +1,8 @@
-# Puma Cloudwatch
+# Puma Cloudwatch Puma
 
 A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
 ## Usage
-
-Some of the plugin's settings can be controlled with environmental variables.
-
-Env Var | Description | Default Value
---- | --- | ---
-PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
-PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
-PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
-PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
-PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the metrics instead of sending them to cloudwatch. | (unset)
-
-### Dimension Value: App Name
 
 You should configure the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name.
 For example, if you're application is named "myapp", this would be a good value to use:
@@ -28,15 +16,27 @@ Then you can get metrics for your `myapp-puma` app. List of metrics:
 * running: the number of running threads (spawned threads) for any Puma worker.
 * backlog: the number of connections in that worker's "todo" set waiting for a worker thread.
 
-The `pool_capacity` metric is important. It can be use to show how busy the server is getting before it reaches capacity.
+The `pool_capacity` metric is important. It shows how busy the server is getting before it reaches capacity.
+
+### Environment Variables
+
+The plugin's settings can be controlled with environmental variables:
+
+Env Var | Description | Default Value
+--- | --- | ---
+PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
+PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
+PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
+PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
+PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the metrics instead of sending them to cloudwatch. | (unset)
 
 ### Sum and Frequency
 
-If you leave the `PUMA_CLOUDWATCH_FREQUENCY` at its default of 60 seconds and you graph out the `pool_capacity` capacity at a 1-minute period, then a useful CloudWatch statistic is Sum. It'll show available `pool_capacity` for all `myapp-puma` servers.  The Sum of the `pool_threads` shows all available threads.
+If you leave the `PUMA_CLOUDWATCH_FREQUENCY` at its default of 60 seconds and graph out the `pool_capacity` capacity with a 1-minute period resolution, then the CloudWatch Sum statistic is useful. It shows how busy all the `myapp-puma` servers are.  Particularly, the `pool_capacity` shows available capacity,  and  `pool_threads` shows the total threads.
 
-**Important**: If you change the CloudWatch send frequency, then Sum statistic must be normalized to be useful.  For example, let's say you use `PUMA_CLOUDWATCH_FREQUENCY=30`. Then puma-cloudwatch will send data every 30s. However, if the chart is still using a 1-minute period, then the Sum statistic would "double".  Capacity has not doubled, puma-cloudwatch is just sending twice as much data.  To normalize the Sum in this case, you can set the time period to match the frequency: 30 seconds.
+**Important**: If you change the CloudWatch send frequency, then Sum statistic must be normalized.  For example, let's say you use `PUMA_CLOUDWATCH_FREQUENCY=30`. Then puma-cloudwatch will send data every 30s. However, if the chart is still using a 1-minute period, then the Sum statistic would "double".  Capacity has not doubled, puma-cloudwatch is just sending twice as much data.  To normalize the Sum, set the time period resolution to match the frequency. In this case: 30 seconds.
 
-If you use the Average statistic, then you don't have to worry about normalizing. Average already inherently normalized. In this sense, average is simpler.
+If you use the Average statistic, then you don't have to worry about normalizing. Average already inherently normalized.
 
 ## Installation
 

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tung Nguyen"]
   spec.email         = ["tongueroo@gmail.com"]
 
-  spec.summary       = "Sends puma stats to CloudWatch"
+  spec.summary       = "Puma plugin sends puma stats to CloudWatch"
   spec.homepage      = "https://github.com/tongueroo/puma-cloudwatch"
   spec.license       = "MIT"
 
