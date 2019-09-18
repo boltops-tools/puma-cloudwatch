@@ -14,7 +14,7 @@ class PumaCloudwatch::Metrics
 
     def run
       raise StandardError, "Puma control app is not activated" if @control_url == nil
-      puts(message) unless ENV['PUMA_CLOUDWATCH_MUTE']
+      puts(message) unless ENV['PUMA_CLOUDWATCH_MUTE_START_MESSAGE']
       Thread.new do
         perform
       end
