@@ -15,7 +15,8 @@ class PumaCloudwatch::Metrics
       @metrics = metrics
       @namespace = ENV['PUMA_CLOUDWATCH_NAMESPACE'] || "WebServer"
       @dimension_name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
-      @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma" # IE: myapp-puma
+      @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
+      @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
     end
 
     def call
@@ -75,20 +76,20 @@ class PumaCloudwatch::Metrics
 
   private
     def put_metric_data(params)
-      if noop? or ENV['PUMA_CLOUDWATCH_DEBUG']
+      if !enabled? or ENV['PUMA_CLOUDWATCH_DEBUG']
         message = "sending data to cloudwatch:"
-        message = "NOOP: #{message}" if noop?
+        message = "NOOP: #{message}" unless enabled?
         puts message
         pp params
       end
 
-      unless noop?
+      if enabled?
         cloudwatch.put_metric_data(params)
       end
     end
 
-    def noop?
-      !ENV["PUMA_CLOUDWATCH_NOOP"].nil?
+    def enabled?
+      !!@enabled
     end
 
     def cloudwatch
