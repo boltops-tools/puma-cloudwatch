@@ -76,7 +76,7 @@ class PumaCloudwatch::Metrics
 
   private
     def put_metric_data(params)
-      if !enabled? or ENV['PUMA_CLOUDWATCH_DEBUG']
+      if ENV['PUMA_CLOUDWATCH_DEBUG']
         message = "sending data to cloudwatch:"
         message = "NOOP: #{message}" unless enabled?
         puts message

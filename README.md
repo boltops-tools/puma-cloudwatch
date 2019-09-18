@@ -1,5 +1,7 @@
 # Puma Cloudwatch Plugin
 
+[![Gem Version](https://badge.fury.io/rb/puma-cloudwatch.svg)](https://badge.fury.io/rb/puma-cloudwatch)
+
 A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
 ## Usage
@@ -27,12 +29,13 @@ The plugin's settings can be controlled with environmental variables:
 
 Env Var | Description | Default Value
 --- | --- | ---
-PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
-PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
+PUMA\_CLOUDWATCH\_DEBUG | When set, the plugin prints out the metrics that get sent to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
 PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
+PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
-PUMA\_CLOUDWATCH\_NOOP | When set, the plugin prints out the metrics instead of sending them to cloudwatch. | (unset)
+PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
+PUMA\_CLOUDWATCH\_MUTE\_START\_MESSAGE | Mutes the "puma-cloudwatch plugin" startup message | (unset)
 
 ### Sum and Frequency Normalization
 
