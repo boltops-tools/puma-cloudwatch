@@ -8,7 +8,7 @@ A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
 **Important**: To enable the plugin to send metrics to CloudWatch you must set the `PUMA_CLOUDWATCH_ENABLED` env variable. This allows you to send only metrics on configured servers and not unintentionally send them locally.
 
-It also strongly encourage to sent the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name. For example, if your application is named "demo-web", this would be a good value to use:
+It also strongly encourage to set the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env variable to include your application name. For example, if your application is named "demo-web", this would be a good value to use:
 
     PUMA_CLOUDWATCH_DIMENSION_VALUE=demo-web-puma
 
