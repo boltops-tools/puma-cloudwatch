@@ -84,7 +84,15 @@ class PumaCloudwatch::Metrics
       end
 
       if enabled?
-        cloudwatch.put_metric_data(params)
+        begin
+          cloudwatch.put_metric_data(params)
+        rescue Aws::CloudWatch::Errors::AccessDenied => e
+          puts "WARN: #{e.class} #{e.message}"
+          puts "Unable to send metrics to CloudWatch"
+        rescue PumaCloudwatch::Error => e
+          puts "WARN: #{e.class} #{e.message}"
+          puts "Unable to send metrics to CloudWatch"
+        end
       end
     end
 
@@ -94,6 +102,12 @@ class PumaCloudwatch::Metrics
 
     def cloudwatch
       @cloudwatch ||= Aws::CloudWatch::Client.new
+    rescue Aws::Errors::MissingRegionError => e
+      # Happens when:
+      #   1. ~/.aws/config is not also setup locally
+      #   2. On EC2 instance when AWS_REGION not set
+      puts "WARN: #{e.class} #{e.message}"
+      raise PumaCloudwatch::Error.new(e.message)
     end
   end
 end
