@@ -2,6 +2,8 @@
 
 [![Gem Version](https://badge.fury.io/rb/puma-cloudwatch.svg)](https://badge.fury.io/rb/puma-cloudwatch)
 
+[![BoltOps Badge](https://img.boltops.com/boltops/badges/boltops-badge.png)](https://www.boltops.com)
+
 A [puma](https://puma.io) plugin that sends puma stats to CloudWatch.
 
 ## Usage
