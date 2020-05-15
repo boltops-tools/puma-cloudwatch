@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.4.1]
+- #1 empty results breaks cloudwatch put_metric_data
+
 ## [0.4.0]
 - improve AWS IAM setup and permission errors so Thread loop doesnt stop
 
