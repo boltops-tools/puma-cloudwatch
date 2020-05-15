@@ -34,7 +34,7 @@ class PumaCloudwatch::Metrics
       loop do
         stats = Fetcher.new(@options).call
         results = Parser.new(stats).call
-        Sender.new(results).call
+        Sender.new(results).call unless results.empty?
         sleep @frequency
       end
     end
