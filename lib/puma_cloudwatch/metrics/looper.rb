@@ -36,6 +36,8 @@ class PumaCloudwatch::Metrics
         results = Parser.new(stats).call
         Sender.new(results).call unless results.empty?
         sleep @frequency
+      rescue Exception => e
+        puts "Error reached top of looper: #{e.message} (#{e.class})"
       end
     end
 
