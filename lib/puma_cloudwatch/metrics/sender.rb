@@ -57,7 +57,7 @@ class PumaCloudwatch::Metrics
             dimensions: dimensions,
             statistic_values: {
               sample_count: values.length,
-              sum: values.sum,
+              sum: values.inject(0) { |sum, el| sum += el },
               minimum: values.min,
               maximum: values.max
             }
