@@ -14,16 +14,16 @@ RSpec.describe PumaCloudwatch::Metrics::Sender do
         data = sender.metric_data
         expect(data).to eq(
           [{:metric_name=>"backlog",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>1, :sum=>0, :minimum=>0, :maximum=>0}},
            {:metric_name=>"running",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16}},
            {:metric_name=>"pool_capacity",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>1, :sum=>8, :minimum=>8, :maximum=>8}},
            {:metric_name=>"max_threads",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16}}]
         )
       end
@@ -49,16 +49,16 @@ RSpec.describe PumaCloudwatch::Metrics::Sender do
         data = sender.metric_data
         expect(data).to eq(
           [{:metric_name=>"backlog",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0}},
            {:metric_name=>"running",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0}},
            {:metric_name=>"pool_capacity",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16}},
            {:metric_name=>"max_threads",
-            :dimensions=>[{:name=>"App", :value=>"puma"}],
+            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
             :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16}}]
         )
       end
