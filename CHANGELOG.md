@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.4.3]
+- #3 Eliminate the need to add Array#sum
+
 ## [0.4.2]
 - #2 keep looper running on adversities
 
