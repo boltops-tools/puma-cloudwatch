@@ -32,12 +32,14 @@ class PumaCloudwatch::Metrics
   private
     def perform
       loop do
-        stats = Fetcher.new(@options).call
-        results = Parser.new(stats).call
-        Sender.new(results).call unless results.empty?
-        sleep @frequency
-      rescue Exception => e
-        puts "Error reached top of looper: #{e.message} (#{e.class})"
+        begin
+          stats = Fetcher.new(@options).call
+          results = Parser.new(stats).call
+          Sender.new(results).call unless results.empty?
+          sleep @frequency
+        rescue Exception => e
+          puts "Error reached top of looper: #{e.message} (#{e.class})"
+        end
       end
     end
 
