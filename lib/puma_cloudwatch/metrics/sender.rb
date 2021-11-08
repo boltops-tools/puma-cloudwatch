@@ -16,6 +16,7 @@ class PumaCloudwatch::Metrics
       @namespace = ENV['PUMA_CLOUDWATCH_NAMESPACE'] || "WebServer"
       @dimension_name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
       @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
+      @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
     end
 
@@ -55,6 +56,7 @@ class PumaCloudwatch::Metrics
           data << {
             metric_name: name.to_s,
             dimensions: dimensions,
+            storage_resolution: @frequency < 60 ? 1 : 60,
             statistic_values: {
               sample_count: values.length,
               sum: values.inject(0) { |sum, el| sum += el },
