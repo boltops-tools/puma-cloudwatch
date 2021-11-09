@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.4.5] - 2021-11-09
+- [#5](https://github.com/boltops-tools/puma-cloudwatch/pull/5) Enabling high-resolution Cloudwatch metrics if frequency is lower tha…
+
 ## [0.4.4]
 - #4 fix syntax error in older versions of ruby
 
