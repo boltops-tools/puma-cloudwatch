@@ -80,4 +80,4 @@ If are you using ECS awsvpc, make sure you have the task running on private subn
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/tongueroo/puma-cloudwatch
+Bug reports and pull requests are welcome on GitHub at https://github.com/boltops-tools/puma-cloudwatch

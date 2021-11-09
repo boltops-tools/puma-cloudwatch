@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tongueroo@gmail.com"]
 
   spec.summary       = "Puma plugin sends puma stats to CloudWatch"
-  spec.homepage      = "https://github.com/tongueroo/puma-cloudwatch"
+  spec.homepage      = "https://github.com/boltops-tools/puma-cloudwatch"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.
