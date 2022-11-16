@@ -1,6 +1,8 @@
 class PumaCloudwatch::Metrics
   class Parser
-    METRICS = [:backlog, :running, :pool_capacity, :max_threads]
+    # METRICS = [:backlog, :running, :pool_capacity, :max_threads]
+    # SecZetta is only using pool_capacity and max_threads metrics to calculate busy_percent
+    METRICS = [:pool_capacity, :max_threads]
 
     def initialize(data)
       @data = data
