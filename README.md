@@ -37,6 +37,7 @@ PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
 PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
 PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
+PUMA\_CLOUDWATCH\_AWS\_REGION | CloudWatch metric AWS region | (unset)
 PUMA\_CLOUDWATCH\_MUTE\_START\_MESSAGE | Mutes the "puma-cloudwatch plugin" startup message | (unset)
 
 ### Sum and Frequency Normalization

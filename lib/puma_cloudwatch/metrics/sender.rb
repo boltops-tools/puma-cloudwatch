@@ -18,6 +18,7 @@ class PumaCloudwatch::Metrics
       @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
       @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
+      @region = ENV['PUMA_CLOUDWATCH_AWS_REGION']
     end
 
     def call
@@ -103,7 +104,12 @@ class PumaCloudwatch::Metrics
     end
 
     def cloudwatch
-      @cloudwatch ||= Aws::CloudWatch::Client.new
+      @cloudwatch ||= if @region.present?
+                        Aws::CloudWatch::Client.new(region: @region)
+                      else
+                        Aws::CloudWatch::Client.new
+                      end
+
     rescue Aws::Errors::MissingRegionError => e
       # Happens when:
       #   1. ~/.aws/config is not also setup locally
