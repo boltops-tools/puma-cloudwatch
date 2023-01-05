@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.4.6] - 2023-01-05
+- [#7](https://github.com/tongueroo/puma-cloudwatch/pull/7) Add PUMA_CLOUDWATCH_AWS_REGION
+
 ## [0.4.5] - 2021-11-09
 - [#5](https://github.com/boltops-tools/puma-cloudwatch/pull/5) Enabling high-resolution Cloudwatch metrics if frequency is lower tha…
 
