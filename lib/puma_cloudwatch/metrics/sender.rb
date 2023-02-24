@@ -104,10 +104,10 @@ class PumaCloudwatch::Metrics
     end
 
     def cloudwatch
-      @cloudwatch ||= if @region.present?
-                        Aws::CloudWatch::Client.new(region: @region)
-                      else
+      @cloudwatch ||= if @region&.empty?
                         Aws::CloudWatch::Client.new
+                      else
+                        Aws::CloudWatch::Client.new(region: @region)
                       end
 
     rescue Aws::Errors::MissingRegionError => e
