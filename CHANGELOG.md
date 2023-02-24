@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.4.8] - 2023-02-24
+- [#10](https://github.com/tongueroo/puma-cloudwatch/pull/10) fix region if check
+- loosen development dependencies
+
 ## [0.4.7] - 2023-02-24
 - [#9](https://github.com/tongueroo/puma-cloudwatch/pull/9) fix region if check
 
