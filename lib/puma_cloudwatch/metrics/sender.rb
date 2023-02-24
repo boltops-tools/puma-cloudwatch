@@ -104,7 +104,7 @@ class PumaCloudwatch::Metrics
     end
 
     def cloudwatch
-      @cloudwatch ||= if @region&.empty?
+      @cloudwatch ||= if @region.nil? || @region.empty?
                         Aws::CloudWatch::Client.new
                       else
                         Aws::CloudWatch::Client.new(region: @region)
