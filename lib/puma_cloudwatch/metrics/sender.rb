@@ -19,6 +19,8 @@ class PumaCloudwatch::Metrics
       @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
       @region = ENV['PUMA_CLOUDWATCH_AWS_REGION']
+      @access_key_id = ENV['PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID']
+      @secret_access_key = ENV['PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY']
     end
 
     def call
@@ -103,13 +105,20 @@ class PumaCloudwatch::Metrics
       !!@enabled
     end
 
-    def cloudwatch
-      @cloudwatch ||= if @region.nil? || @region.empty?
-                        Aws::CloudWatch::Client.new
-                      else
-                        Aws::CloudWatch::Client.new(region: @region)
-                      end
+    def aws_credentials
+      return nil if @access_key_id.nil? || @access_key_id.empty? || @secret_access_key.nil? || @secret_access_key.empty?
 
+      @aws_credentials ||= Aws::Credentials.new(
+        @access_key_id,
+        @secret_access_key
+      )
+    end
+
+    def cloudwatch
+      @cloudwatch ||= Aws::CloudWatch::Client.new({
+        region: @region,
+        credentials: aws_credentials
+      }.compact)
     rescue Aws::Errors::MissingRegionError => e
       # Happens when:
       #   1. ~/.aws/config is not also setup locally
