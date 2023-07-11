@@ -38,6 +38,8 @@ PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
 PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
 PUMA\_CLOUDWATCH\_AWS\_REGION | CloudWatch metric AWS region | (unset)
+PUMA\_CLOUDWATCH\_AWS\_ACCESS_KEY_ID | AWS access key ID | (unset)
+PUMA\_CLOUDWATCH\_AWS\_SECRET_ACCESS_KEY | AWS secret access key | (unset)
 PUMA\_CLOUDWATCH\_MUTE\_START\_MESSAGE | Mutes the "puma-cloudwatch plugin" startup message | (unset)
 
 ### Sum and Frequency Normalization
@@ -73,7 +75,7 @@ It activates the puma control rack application, and enables the puma-cloudwatch 
 
 ### More Setup Notes
 
-Make sure that EC2 instance running the puma server has IAM permission to publish to CloudWatch. If you are using ECS, the default permissions for the ECS task should work.
+Make sure that EC2 instance running the puma server has IAM permission to publish to CloudWatch. If you are using ECS, the default permissions for the ECS task should work. Alternatively, you may configure an AWS Access Key ID and Secret Key with the `PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID` and `PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY` env variables.
 
 If are you using ECS awsvpc, make sure you have the task running on private subnets with a NAT. From the AWS docs: [Task Networking with the awsvpc Network Mode](https://docs.aws.amazon.com/en_pv/AmazonECS/latest/developerguide/task-networking.html)
 
