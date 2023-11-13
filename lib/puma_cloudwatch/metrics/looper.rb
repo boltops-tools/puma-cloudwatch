@@ -10,6 +10,7 @@ class PumaCloudwatch::Metrics
       @control_auth_token = options[:control_auth_token]
       @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
+      @fetched = false
     end
 
     def run
@@ -34,11 +35,17 @@ class PumaCloudwatch::Metrics
       loop do
         begin
           stats = Fetcher.new(@options).call
+          @fetched = true
           results = Parser.new(stats).call
           Sender.new(results).call unless results.empty?
           sleep @frequency
         rescue Exception => e
-          puts "Error reached top of looper: #{e.message} (#{e.class})"
+          if @fetched
+            puts "Error reached top of looper: #{e.message} (#{e.class})"
+          else
+            # sleep and don't error until we've successfully fetched
+            sleep @frequency
+          end
         end
       end
     end
