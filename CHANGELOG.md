@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.5.1] - 2023-11-13
+- [#13](https://github.com/tongueroo/puma-cloudwatch/pull/13) delay error messages until first successful fetch
+
 ## [0.5.0] - 2023-07-11
 - [#11](https://github.com/tongueroo/puma-cloudwatch/pull/11) Added support for PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID and PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY env vars to configure an AWS access key
 - [#12](https://github.com/tongueroo/puma-cloudwatch/pull/12) http tcp port support also
