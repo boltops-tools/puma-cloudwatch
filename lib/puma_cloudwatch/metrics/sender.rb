@@ -11,7 +11,7 @@ require "aws-sdk-cloudwatch"
 #
 class PumaCloudwatch::Metrics
   class Sender
-    def initialize(metrics)
+    def initialize(metrics, environment)
       @metrics = metrics
       @namespace = ENV['PUMA_CLOUDWATCH_NAMESPACE'] || "WebServer"
       @dimension_name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
@@ -21,6 +21,7 @@ class PumaCloudwatch::Metrics
       @region = ENV['PUMA_CLOUDWATCH_AWS_REGION']
       @access_key_id = ENV['PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID']
       @secret_access_key = ENV['PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY']
+      @environment = ENV['PUMA_CLOUDWATCH_ENVIRONMENT'] || environment
     end
 
     def call
@@ -74,8 +75,8 @@ class PumaCloudwatch::Metrics
 
     def dimensions
       [
-        name: @dimension_name,
-        value: @dimension_value
+        { name: @dimension_name, value: @dimension_value },
+        { name: 'environment', value: @environment }
       ]
     end
 

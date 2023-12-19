@@ -1,5 +1,5 @@
 RSpec.describe PumaCloudwatch::Metrics::Fetcher do
-  subject(:fetcher) { described_class.new(control_url: '', control_auth_token: '') }
+  subject(:fetcher) { described_class.new(control_url: 'unix://', control_auth_token: '') }
 
   describe "fetcher" do
     it "call" do

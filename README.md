@@ -41,6 +41,7 @@ PUMA\_CLOUDWATCH\_AWS\_REGION | CloudWatch metric AWS region | (unset)
 PUMA\_CLOUDWATCH\_AWS\_ACCESS_KEY_ID | AWS access key ID | (unset)
 PUMA\_CLOUDWATCH\_AWS\_SECRET_ACCESS_KEY | AWS secret access key | (unset)
 PUMA\_CLOUDWATCH\_MUTE\_START\_MESSAGE | Mutes the "puma-cloudwatch plugin" startup message | (unset)
+PUMA\_CLOUDWATCH\_ENVIRONMENT | CloudWatch environment dimension value | (Puma servers environment)
 
 ### Sum and Frequency Normalization
 
