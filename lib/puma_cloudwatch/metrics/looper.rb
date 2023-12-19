@@ -37,7 +37,7 @@ class PumaCloudwatch::Metrics
           stats = Fetcher.new(@options).call
           @fetched = true
           results = Parser.new(stats).call
-          Sender.new(results).call unless results.empty?
+          Sender.new(results, @options[:environment]).call unless results.empty?
           sleep @frequency
         rescue Exception => e
           if @fetched

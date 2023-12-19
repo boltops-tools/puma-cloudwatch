@@ -1,5 +1,5 @@
 RSpec.describe PumaCloudwatch::Metrics::Sender do
-  subject(:sender) { described_class.new(metrics) }
+  subject(:sender) { described_class.new(metrics, 'development') }
 
   context "single mode" do
     context "metrics filled out" do
@@ -14,17 +14,21 @@ RSpec.describe PumaCloudwatch::Metrics::Sender do
         data = sender.metric_data
         expect(data).to eq(
           [{:metric_name=>"backlog",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>1, :sum=>0, :minimum=>0, :maximum=>0}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>1, :sum=>0, :minimum=>0, :maximum=>0},
+            :storage_resolution=>60},
            {:metric_name=>"running",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16},
+            :storage_resolution=>60},
            {:metric_name=>"pool_capacity",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>1, :sum=>8, :minimum=>8, :maximum=>8}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>1, :sum=>8, :minimum=>8, :maximum=>8},
+            :storage_resolution=>60},
            {:metric_name=>"max_threads",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16}}]
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>1, :sum=>16, :minimum=>16, :maximum=>16},
+            :storage_resolution=>60}]
         )
       end
 
@@ -49,17 +53,21 @@ RSpec.describe PumaCloudwatch::Metrics::Sender do
         data = sender.metric_data
         expect(data).to eq(
           [{:metric_name=>"backlog",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0},
+            :storage_resolution=>60},
            {:metric_name=>"running",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>2, :sum=>0, :minimum=>0, :maximum=>0},
+            :storage_resolution=>60},
            {:metric_name=>"pool_capacity",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16}},
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16},
+            :storage_resolution=>60},
            {:metric_name=>"max_threads",
-            :dimensions=>[{:name=>"App", :value=>"demo-puma"}],
-            :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16}}]
+            :dimensions=>[{:name=>"App", :value=>"puma"}, {:name=>"environment", :value=>"development"}],
+            :statistic_values=>{:sample_count=>2, :sum=>32, :minimum=>16, :maximum=>16},
+            :storage_resolution=>60}]
         )
       end
 
