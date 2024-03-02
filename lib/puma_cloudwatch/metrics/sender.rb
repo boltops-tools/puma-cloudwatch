@@ -16,6 +16,7 @@ class PumaCloudwatch::Metrics
       @namespace = ENV['PUMA_CLOUDWATCH_NAMESPACE'] || "WebServer"
       @dimension_name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
       @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
+      @dimensions = ENV['PUMA_CLOUDWATCH_DIMENSIONS'].to_s.split(",").map { |d| [:name, :value].zip(d.split(":")).to_h }
       @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
       @region = ENV['PUMA_CLOUDWATCH_AWS_REGION']
@@ -73,6 +74,7 @@ class PumaCloudwatch::Metrics
     end
 
     def dimensions
+      return @dimensions if @dimensions.any?
       [
         name: @dimension_name,
         value: @dimension_value

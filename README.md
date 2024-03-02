@@ -14,10 +14,16 @@ It also strongly encourage to set the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env vari
 
     PUMA_CLOUDWATCH_DIMENSION_VALUE=demo-web-puma
 
-Then you can get metrics for your `demo-web-puma` app. List of metrics:
+Then you can get metrics for your `demo-web-puma` app.
+
+Alternatively, you can set the `PUMA_CLOUDWATCH_DIMENSIONS` value to set multiple dimensions for the metrics. For example, if your app is running in ECS, you might want to specify the cluster name and the service name:
+
+    PUMA_CLOUDWATCH_DIMENSIONS=ClusterName:production,ServiceName:web
+
+### List of Metrics
 
 * pool_capacity: the number of requests that the server is capable of taking right now.
-* max_threads:  preconfigured maximum number of worker threads.
+* max_threads: preconfigured maximum number of worker threads.
 * running: the number of running threads (spawned threads) for any Puma worker.
 * backlog: the number of connections in that worker's "todo" set waiting for a worker thread.
 
@@ -29,18 +35,19 @@ The `pool_capacity` metric is important. It can be used to show how busy the ser
 
 The plugin's settings can be controlled with environmental variables:
 
-Env Var | Description | Default Value
---- | --- | ---
-PUMA\_CLOUDWATCH\_DEBUG | When set, the plugin prints out the metrics that get sent to CloudWatch. | (unset)
-PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
-PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
-PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
-PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
-PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
-PUMA\_CLOUDWATCH\_AWS\_REGION | CloudWatch metric AWS region | (unset)
-PUMA\_CLOUDWATCH\_AWS\_ACCESS_KEY_ID | AWS access key ID | (unset)
-PUMA\_CLOUDWATCH\_AWS\_SECRET_ACCESS_KEY | AWS secret access key | (unset)
-PUMA\_CLOUDWATCH\_MUTE\_START\_MESSAGE | Mutes the "puma-cloudwatch plugin" startup message | (unset)
+| Env Var                               | Description                                                              | Default Value |
+| ------------------------------------- | ------------------------------------------------------------------------ | ------------- |
+| PUMA_CLOUDWATCH_DEBUG                 | When set, the plugin prints out the metrics that get sent to CloudWatch. | (unset)       |
+| PUMA_CLOUDWATCH_DIMENSION_NAME        | CloudWatch metric dimension name                                         | App           |
+| PUMA_CLOUDWATCH_DIMENSION_VALUE       | CloudWatch metric dimension value                                        | puma          |
+| PUMA_CLOUDWATCH_DIMENSIONS            | CloudWatch metric dimension name/value pairs                             | (unset)       |
+| PUMA_CLOUDWATCH_ENABLED               | Enables sending of the data to CloudWatch.                               | (unset)       |
+| PUMA_CLOUDWATCH_FREQUENCY             | How often to send data to CloudWatch in seconds.                         | 60            |
+| PUMA_CLOUDWATCH_NAMESPACE             | CloudWatch metric namespace                                              | WebServer     |
+| PUMA_CLOUDWATCH_AWS_REGION            | CloudWatch metric AWS region                                             | (unset)       |
+| PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID     | AWS access key ID                                                        | (unset)       |
+| PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY | AWS secret access key                                                    | (unset)       |
+| PUMA_CLOUDWATCH_MUTE_START_MESSAGE    | Mutes the "puma-cloudwatch plugin" startup message                       | (unset)       |
 
 ### Sum and Frequency Normalization
 
