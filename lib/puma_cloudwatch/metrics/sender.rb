@@ -14,13 +14,33 @@ class PumaCloudwatch::Metrics
     def initialize(metrics)
       @metrics = metrics
       @namespace = ENV['PUMA_CLOUDWATCH_NAMESPACE'] || "WebServer"
-      @dimension_name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
-      @dimension_value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
+      @dimensions = calculate_dimensions
       @frequency = Integer(ENV['PUMA_CLOUDWATCH_FREQUENCY'] || 60)
       @enabled = ENV['PUMA_CLOUDWATCH_ENABLED'] || false
       @region = ENV['PUMA_CLOUDWATCH_AWS_REGION']
       @access_key_id = ENV['PUMA_CLOUDWATCH_AWS_ACCESS_KEY_ID']
       @secret_access_key = ENV['PUMA_CLOUDWATCH_AWS_SECRET_ACCESS_KEY']
+    end
+
+    def calculate_dimensions
+      if ENV.key?('PUMA_CLOUDWATCH_DIMENSIONS')
+        ENV['PUMA_CLOUDWATCH_DIMENSIONS'].split(',').map(&:strip).map do |dimension|
+          name, value = dimension.split('=').map(&:strip)
+
+          {
+            name: name,
+            value: value,
+          }
+        end
+      else
+        name = ENV['PUMA_CLOUDWATCH_DIMENSION_NAME'] || "App"
+        value = ENV['PUMA_CLOUDWATCH_DIMENSION_VALUE'] || "puma"
+
+        [
+          name: name,
+          value: value
+        ]
+      end
     end
 
     def call
@@ -58,7 +78,7 @@ class PumaCloudwatch::Metrics
         metric.each do |name, values|
           data << {
             metric_name: name.to_s,
-            dimensions: dimensions,
+            dimensions: @dimensions,
             storage_resolution: @frequency < 60 ? 1 : 60,
             statistic_values: {
               sample_count: values.length,
@@ -70,13 +90,6 @@ class PumaCloudwatch::Metrics
         end
       end
       data
-    end
-
-    def dimensions
-      [
-        name: @dimension_name,
-        value: @dimension_value
-      ]
     end
 
   private

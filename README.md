@@ -14,6 +14,10 @@ It also strongly encourage to set the `PUMA_CLOUDWATCH_DIMENSION_VALUE` env vari
 
     PUMA_CLOUDWATCH_DIMENSION_VALUE=demo-web-puma
 
+Or if you need to set multiple dimensions, you could use something like:
+
+    PUMA_CLOUDWATCH_DIMENSIONS="Service=web,Cluster=primary,Environment=production"
+
 Then you can get metrics for your `demo-web-puma` app. List of metrics:
 
 * pool_capacity: the number of requests that the server is capable of taking right now.
@@ -34,6 +38,7 @@ Env Var | Description | Default Value
 PUMA\_CLOUDWATCH\_DEBUG | When set, the plugin prints out the metrics that get sent to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_DIMENSION\_NAME | CloudWatch metric dimension name | App
 PUMA\_CLOUDWATCH\_DIMENSION\_VALUE | CloudWatch metric dimension value | puma
+PUMA\_CLOUDWATCH\_DIMENSIONS | CloudWatch metric dimensions | (unset)
 PUMA\_CLOUDWATCH\_ENABLED | Enables sending of the data to CloudWatch. | (unset)
 PUMA\_CLOUDWATCH\_FREQUENCY | How often to send data to CloudWatch in seconds. | 60
 PUMA\_CLOUDWATCH\_NAMESPACE | CloudWatch metric namespace | WebServer
