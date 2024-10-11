@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 This project *loosely tries* to adhere to [Semantic Versioning](http://semver.org/).
 
+## [0.5.2] - 2024-10-11
+- [#16](https://github.com/tongueroo/puma-cloudwatch/pull/16) feat: permit multiple metric dimensions
+
 ## [0.5.1] - 2023-11-13
 - [#13](https://github.com/tongueroo/puma-cloudwatch/pull/13) delay error messages until first successful fetch
 
